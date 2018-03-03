@@ -8,26 +8,43 @@
 #define H8_3069F_SCI2 ((volatile struct h8_3069f_sci *)0xffffc0)
 
 struct h8_3069f_sci{
-    volatile uint8 smr;
-    volatile uint8 brr;
-    volatile uint8 scr;
-    volatile uint8 tdr;
-    volatile uint8 ssr;
-    volatile uint8 rdr;
+    volatile uint8 smr; /* シリアル通信のモード設定 */
+    volatile uint8 brr; /* ボーレートの設定 */
+    volatile uint8 scr; /* 送受信の有効・無効など。シリアルコントロールレジスタ*/
+    volatile uint8 tdr; /* 送信したい1文字を書き込む */
+    volatile uint8 ssr; /* 送信完了・受信完了などを表す */
+    volatile uint8 rdr; /* 受信した1文字を読み出す */
     volatile uint8 scmr;
 };
 
-#define H8_3069F_SCI_SMR_CKS_PER1 (0<<0)
-#define H8_3069F_SCI_SMR_CKS_PER4 (1<<0)
+/* SMR: シリアル通信のモード設定 */
+/*
+    0, 1: クロックセレクト、共にゼロならばクロックをそのまま利用する
+    3: ストップビット長、0で1ビット、1で2ビット
+    4: パリティの種類、0で偶数パリティ、1で奇数パリティ
+    5: 0でパリティ無効、1でパリティ有効
+    6: データ長、0で8ビット、1で7ビット
+    7: 0で調歩同期式モード、1でクロック同期式モード
+*/ 
+#define H8_3069F_SCI_SMR_CKS_PER1 (0<<0) 
+#define H8_3069F_SCI_SMR_CKS_PER4 (1<<0) 
 #define H8_3069F_SCI_SMR_CKS_PER16 (2<<0)
 #define H8_3069F_SCI_SMR_CKS_PER64 (3<<0)
-#define H8_3069F_SCI_SMR_MP (1<<2)
+#define H8_3069F_SCI_SMR_MP (1<<2) 
 #define H8_3069F_SCI_SMR_STOP (1<<3)
 #define H8_3069F_SCI_SMR_OE (1<<4)
 #define H8_3069F_SCI_SMR_PE (1<<5)
 #define H8_3069F_SCI_SMR_CHR (1<<6)
 #define H8_3069F_SCI_SMR_CA (1<<7)
 
+/* SCR: 送受信の有効/無効など シリアルコントロールレジスタ */
+/*
+    0, 1: クロックイネーブル、ひとまず共にゼロで良い
+    4: 受信イネーブル、1で受信開始
+    5: 送信イネーブル、1で送信開始
+    6: 受信割り込みイネーブル、1で受信割り込み有効
+    7: 送信割り込みイネーブル、1で送信割り込み有効
+*/
 #define H8_3069F_SCI_SCR_CKE0 (1<<0)
 #define H8_3069F_SCI_SCR_CKE1 (1<<1)
 #define H8_3069F_SCI_SCR_TEIE (1<<2)
@@ -37,6 +54,7 @@ struct h8_3069f_sci{
 #define H8_3069F_SCI_SCR_RIE (1<<6) /* 受信割り込み有効 */
 #define H8_3069F_SCI_SCR_TIE (1<<7) /* 送信割り込み有効 */
 
+/* SSR: 送信完了/受信完了などを表す */
 #define H8_3069F_SCI_SSR_MPBT (1<<0)
 #define H8_3069F_SCI_SSR_MPB (1<<1)
 #define H8_3069F_SCI_SSR_TEND (1<<2)
