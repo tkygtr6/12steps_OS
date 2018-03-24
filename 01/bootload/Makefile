@@ -17,7 +17,7 @@ H8WRITE = ../../tools/h8write/h8write
 H8WRITE_SERDEV = /dev/serial/by-id/usb-FTDI_USB_HS_SERIAL_CONVERTER_FT1S8XCY-if00-port0
 
 OBJS = vector.o startup.o main.o
-OBJS += lib.o serial.o
+OBJS += lib.o serial.o xmodem.o
 
 TARGET = kzload
 
