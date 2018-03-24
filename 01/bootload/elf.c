@@ -20,8 +20,8 @@ struct elf_header {
     long section_header_offset; /* セクションヘッダテーブルの位置 */
     long flags; /* 各種フラグ */
     short header_size; /* ELFヘッダのサイズ */
-    short program_header_num; /* プログラムヘッダのサイズ */
-    short program_header_size; /* プログラムヘッダの個数 */
+    short program_header_size; /* プログラムヘッダのサイズ */
+    short program_header_num; /* プログラムヘッダの個数 */
     short section_header_size; /* セクションヘッダのサイズ */
     short section_header_num; /* セクションヘッダの個数 */
     short section_name_index; /* セクション名を格納するセクション */
@@ -46,8 +46,8 @@ static int elf_check(struct elf_header *header){
 
     if (header->id.class    != 1) return -1; /* ELF32 */
     if (header->id.format   != 2) return -1; /* Big endian */
-    if (header->version     != 1) return -1; /* version 1 */
-    if (header->type        != 2) return -2; /* Executable file */
+    if (header->id.version     != 1) return -1; /* version 1 */
+    if (header->type        != 2) return -1; /* Executable file */
     if (header->version     != 1) return -1; /* version 1 */
 
     /* Hitachi H8/300 or H8/300H */
