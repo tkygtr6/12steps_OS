@@ -16,8 +16,8 @@ STRIP = $(BINDER)/$(ADDNAME)strip
 H8WRITE = ../../tools/h8write/h8write
 H8WRITE_SERDEV = /dev/serial/by-id/usb-FTDI_USB_HS_SERIAL_CONVERTER_FT1S8XCY-if00-port0
 
-OBJS = vector.o startup.o main.o elf.o
-OBJS += lib.o serial.o xmodem.o
+OBJS = vector.o startup.o intr.o main.o interrupt.o
+OBJS += lib.o serial.o xmodem.o elf.o
 
 TARGET = kzload
 
@@ -32,6 +32,7 @@ LFLAGS = -static -T ld.scr -L.
 
 .SUFFIXES: .c .o
 .SUFFIXES: .s .o
+.SUFFIXES: .S .o
 
 all :	$(TARGET)
 
@@ -44,6 +45,9 @@ $(TARGET) :	$(OBJS)
 		$(CC) -c $(CFLAGS) $<
 
 .s.o :		$<
+		$(CC) -c $(CFLAGS) $<
+
+.S.o :		$<
 		$(CC) -c $(CFLAGS) $<
 
 $(TARGET).mot : $(TARGET)
